@@ -11,6 +11,18 @@ function Customer(){
   this.start = () =>{
 
   }
+  this.ask = () =>{
+    return inquirer.prompt([
+        {
+          name: "id",
+          message: "Please provide an ID for the item you wish to purchase."
+        },
+        {
+          name: "quantityt",
+          message: "Please provide the quantity of how many you wish to purchase."
+        }
+    ])
+  }
 }
 
 const customer = new Customer();
