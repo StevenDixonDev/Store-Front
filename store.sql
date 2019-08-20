@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS storefront;
 
 CREATE DATABASE storefront;
 
+USE storefront;
+
 CREATE TABLE products (
     item_id INT NOT NULL AUTO_INCREMENT,
     product_name varchar(60) NOT NULL,

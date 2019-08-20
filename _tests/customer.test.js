@@ -1,16 +1,21 @@
 const customer = require('../storefrontCustomer');
 
-test('Connects To Mysql database', () => {
-  expect(customer.connect() ).toBe(true);
+test('Connects To Mysql database', done => {
+  function callback(flag){
+    expect(flag).toBe(true);
+    done();
+  }
+
+  customer.connect(callback);
 });
 
 test('should show database content', ()=>{
-  expext(typeof customer.show).toBe('Function');
+  expect(typeof customer.show).toBe('function');
 });
 
 test('Should handle user input', ()=> {
   // given the input from 
-  customer.handleInput(01, 5).then((data)=>{
+  customer.handleInput({id: 0, quantity: 50}).then((data)=>{
       expect(data).tobe("Insufficient quanity!");
   })
 })
