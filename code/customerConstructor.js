@@ -4,10 +4,10 @@ const connect = require("./mySQLConnection");
 const connection = connect();
 
 function Customer(){
+    // test the connection
     this.connect = (callback)=>{
       connection.connect(function(err) {
         if (err) throw err;
-        //console.log("connected as id " + connection.threadId);
         callback(true);
       });
     }
@@ -26,8 +26,9 @@ function Customer(){
           }
       ])
     }
-    this.show = () =>{
-  
+    this.show = (dataToShow) =>{
+        console.log(dataToShow);
+        return dataToShow;
     }
     // input is an object from inquirer
     this.handleInput = ({id, quantity}, callback) =>{
@@ -45,6 +46,7 @@ function Customer(){
             return connection.end();
           }
         }else{
+          console.log("An item with that name or id does not exist.");  
           connection.end();
         }
       })

@@ -1,6 +1,8 @@
 const Customer = require('../code/customerConstructor');
 
-const customer = new Customer();
+beforeAll(() => {
+  return customer = new Customer();
+});
 
 test('Connects To Mysql database', done => {
   function callback(flag){
@@ -12,14 +14,13 @@ test('Connects To Mysql database', done => {
 
 test('should show database content', ()=>{
   expect(typeof customer.show).toBe('function');
+  expect(typeof customer.show('jest:::output = test')).toBe('string');
 });
 
 test('Should handle user input', done=> {
   function callback(data){
-    expect(data).not.toBe(null);
+    expect(data).toBe(1);
     done();
   }
-
-  // given the input from 
-  customer.handleInput({id: 1, quantity: 2}, callback);
+  customer.handleInput({id: 1, quantity: 0}, callback);
 })
