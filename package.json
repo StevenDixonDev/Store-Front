@@ -4,6 +4,9 @@
   "description": "a command line store front using node.js and mysql",
   "main": "index.js",
   "scripts": {
+    "customer": "node storefrontCustomer.js",
+    "manager": "node storefrontManager.js",
+    "supervisor": "node storefrontSupervisor.js",
     "test": "jest"
   },
   "repository": {
