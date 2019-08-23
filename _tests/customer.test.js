@@ -12,19 +12,4 @@ test('Connects To Mysql database', done => {
   customer.connect(callback);
 });
 
-test('should show database content', ()=>{
-  expect(typeof customer.show).toBe('function');
-  expect(typeof customer.show('jest:::output = test')).toBe('string');
-});
 
-test('Should handle user input', done=> {
-  function callback(data){
-    expect(data).toBe(1);
-    done();
-  }
-  customer.handleInput({id: 1, quantity: 0}, callback);
-})
-
-test('Should handle insufficient quantity', ()=> {
-  expect(customer.handleResult("test")).toBe("test");
-})
