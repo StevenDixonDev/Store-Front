@@ -5,11 +5,11 @@ beforeAll(() => {
 });
 
 test('Connects To Mysql database', done => {
-  function callback(flag){
-    expect(flag).toBe(true);
+  function callback(err){
+    expect(err).toBe(null);
     done();
   }
-  customer.connect(callback);
+  customer.connection().connect(callback);
 });
 
 test('it handles items not available in db', done =>{

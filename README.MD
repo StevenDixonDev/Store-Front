@@ -25,6 +25,6 @@ run `node storefrontSupervisor.js` or `npm run supervisor`
 
 This project was created to showcase using node with sql to develop a application that can use CRUD methodologies against a database. 
 
-Outside of the scope of the project I also wanted to learn more about testing using the node library jest. 
+Outside of the scope of the project I also wanted to learn more about testing using the node library jest. Jest was a hard concept to tackle and I am not sure I have it fully figured out. 
 
-I also built a small function helper that turns the query from mysql into a promise instead of using a callback. This allowed me to clean up my code alot.
+I also built a small function helper that turns the query from mysql into a promise instead of using a callback. This allowed me to clean up my code alot. I also found out that this functionality is built into the Node 8 utils library.

@@ -5,20 +5,22 @@ const queryToPromise = require("./queryPromisify");
 const connection = connect();
 
 function Manager(){
-  this.connect = callback => {
-    connection.connect(function(err) {
-      if (err) throw err;
-      callback(true);
-    });
-  };
+  this.connection = () =>{
+    return connection;
+  }
   this.start = () =>{
     this.ask()
     .then(answers => {
       return this.mapChoiceToFunction(answers.userChoice);
-    });
+    }).catch(err => {
+      console.log(err);
+    })
+    .finally(()=>{
+      connection.end();
+    })
   }
   this.ask = () =>{
-    inquirer.prompt([
+    return inquirer.prompt([
       {
         type: 'list',
         name: 'userChoice',

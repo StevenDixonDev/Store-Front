@@ -5,9 +5,18 @@ beforeAll(() => {
 });
 
 test('Connects To Mysql database', done => {
-  function callback(flag){
-    expect(flag).toBe(true);
+  function callback(err){
+    expect(err).toBe(null);
     done();
   }
-  manager.connect(callback);
+  manager.connection().connect(callback);
 });
+
+//should have a function that shows products
+
+//should have a function that shows inventory that is low
+
+// should have a function that adds to inventory
+
+// should have a function that adds a new item
+

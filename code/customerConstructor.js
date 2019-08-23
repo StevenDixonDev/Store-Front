@@ -6,12 +6,6 @@ const connection = connect();
 
 function Customer() {
   // test the connection
-  this.connect = callback => {
-    connection.connect(function(err) {
-      if (err) throw err;
-      callback(true);
-    });
-  };
   this.connection = () =>{
     return connection;
   }
@@ -29,6 +23,8 @@ function Customer() {
       .then(data => {
         // handle the result of the users input and buying the items from the db
         this.handleResult(...data);
+      }).finally(()=>{
+        connection.end();
       })
       .catch(err => {
         console.log(err);
@@ -97,7 +93,6 @@ function Customer() {
     ).then(res => {
       console.log("Purchase successful, thank you for your purchase.");
       console.log(`Total spent: $${quanity * price}`);
-      connection.end();
     });
   };
 }
