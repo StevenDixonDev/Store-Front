@@ -42,10 +42,18 @@ function Manager(){
     }
   }
   this.showProducts = () =>{
-
+    return queryToPromise(connection, "SELECT * from products")
+    .then((data)=>{
+      console.log(data.map(item => `Id: ${item.item_id} | Name: ${item.product_name} | Quantity: ${item.stock_quanity}`))
+      return data;
+    })
   };
   this.showLowInvetory = () =>{
-
+    return queryToPromise(connection, "SELECT * from products WHERE stock_quanity < 20")
+    .then((data)=>{
+      console.log(data.map(item => `Id: ${item.item_id} | Name: ${item.product_name} | Quantity: ${item.stock_quanity}`))
+      return data;
+    })
   }
   this.addToInventory = () =>{
 
