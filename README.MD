@@ -19,7 +19,7 @@ run `node storefrontManager.js` or `npm run manager`
 
 ### Supervisor Mode 
 
-run `node storefrontSupervisor.js` or `npm run manager`
+run `node storefrontSupervisor.js` or `npm run supervisor`
 
 ## What I learned
 

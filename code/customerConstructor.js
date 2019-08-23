@@ -12,6 +12,9 @@ function Customer() {
       callback(true);
     });
   };
+  this.connection = () =>{
+    return connection;
+  }
   this.start = () => {
     // query the data base to display data for the user to use
     this.queryDataBase()
@@ -61,7 +64,8 @@ function Customer() {
     return dataToShow;
   };
   this.queryDataBase = () => {
-    return queryToPromise(connection, "SELECT * FROM products;").then(data => {
+    return queryToPromise(connection, "SELECT * FROM products;")
+    .then(data => {
       return this.show(data);
     });
   };
@@ -69,8 +73,8 @@ function Customer() {
   this.handleInput = ({ id, quantity }) => {
     return queryToPromise(
       connection,
-      "SELECT * FROM products WHERE item_id = ?",
-      [id]
+      "SELECT * FROM products WHERE item_id = ? OR product_name = ?;",
+      [id, id]
     ).then(res => {
       if (res.length > 0) {
         if (res[0].stock_quanity < quantity) {
@@ -88,7 +92,7 @@ function Customer() {
     // Update db with new product quantity
     return queryToPromise(
       connection,
-      "UPDATE products set stock_quanity = ? WHERE item_id = ?",
+      "UPDATE products set stock_quanity = ? WHERE item_id = ?;",
       [stockQuantity - quanity, id]
     ).then(res => {
       console.log("Purchase successful, thank you for your purchase.");
