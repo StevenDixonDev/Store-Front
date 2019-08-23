@@ -24,3 +24,7 @@ test('Should handle user input', done=> {
   }
   customer.handleInput({id: 1, quantity: 0}, callback);
 })
+
+test('Should handle insufficient quantity', ()=> {
+  expect(customer.handleResult("test")).toBe("test");
+})
