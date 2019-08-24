@@ -30,19 +30,55 @@ describe("Manager object", () => {
   test('Should have a function named addNewProdcut', () => {
     expect(typeof manager.addNewProdcut).toBe('function');
   })
-})
+});
 
 test("Show products should return an array of items", done => {
   manager.showProducts().then(array => {
     expect(Array.isArray(array)).toBeTruthy();
     done();
   })
-})
+});
 
 
-test("Show Low inventory should should return an array of items with a quantity less than 20", done => {
+test("Show Low inventory should should return an array of items with a quantity less than 5", done => {
   manager.showLowInvetory().then(array => {
-    expect(array.every(item => item.stock_quanity < 20)).toBeTruthy();
+    expect(array.every(item => item.stock_quanity < 5)).toBe(true);
     done();
   })
-})
+});
+
+test("Add inventory should update the database", done => {
+  manager.addToInventory({ id: 1, quantity: 2 }).then(data => {
+    expect(data.affectedRows).toBe(1);
+    done();
+  })
+});
+
+test("Add inventory should throw an error if item does not exist", done => {
+  manager.addToInventory({ id: 'test', quantity: 2 }).then(data => {
+    expect(data).toBe(null);
+    done();
+  })
+    .catch(err => {
+      expect(err).not.toBe(null);
+      done();
+    })
+});
+
+test('Add new product should update database', done => {
+  manager.addNewProdcut({ name: 'law book', department: 'law', price: 10, quantity: 2 }).then(data => {
+    expect(data.affectedRows).toBe(1);
+    manager.connection().query('DELETE FROM products WHERE product_name = "law book"', () => done())
+  })
+});
+
+test('Add new product should fail if a product already exists', done => {
+  manager.addNewProdcut({ name: 'ps4', department: 'law', price: 10, quantity: 2 }).then(data => {
+    expect(data.affectedRows).toBe(0);
+    done();
+  })
+    .catch(err => {
+      expect(err).not.toBe(null);
+      done();
+    })
+});

@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const connect = require("./mySQLConnection");
 const queryToPromise = require("./queryPromisify");
+const cTable = require('console.table');
 
 const connection = connect();
 
@@ -47,14 +48,7 @@ function Customer() {
   // display database data in console
   this.show = dataToShow => {
     if (typeof dataToShow !== "string") {
-      console.log(
-        dataToShow.map(
-          item =>
-            `id: ${item.item_id} |  name: ${item.product_name} | quantity: ${
-              item.stock_quanity
-            }`
-        )
-      );
+      console.table(dataToShow);
     }
     // return data so that we can use it in the next then function
     return dataToShow;
