@@ -31,7 +31,7 @@ function Supervisor() {
     this.mapChoiceToFunctions = ({ choice }) => {
         switch (choice) {
             case "View Product Sales by Department": return this.viewProducts();
-            case "Create New Department": return '';
+            case "Create New Department": return this.createDepartmentAsk();
         }
     }
     this.viewProducts = () => {
@@ -39,6 +39,33 @@ function Supervisor() {
             .then((data) => {
                 console.table(data);
                 return data;
+            })
+    }
+    this.createDepartmentAsk = () => {
+        return inquirer.prompt([
+            {
+                type: 'input',
+                name: 'department',
+                message: 'Please specify a department name'
+            },
+            {
+                type: 'input',
+                name: 'over_head',
+                message: 'Please provide the departments current overhead'
+            }
+        ])
+            .then(this.createDepartment);
+    }
+    this.createDepartment = ({ department, over_head }) => {
+        return queryToPromise(connection, `INSERT INTO departments (department_name, over_head_costs) VALUES (?,?)`, [department, over_head])
+            .then((data) => {
+                console.log(data)
+                if (data.affectedRows === 0) {
+                    throw 'Department already exists';
+                } else {
+                    console.log(`Department has been added.`);
+                    return data;
+                }
             })
     }
 }

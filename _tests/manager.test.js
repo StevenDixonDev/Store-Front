@@ -68,7 +68,7 @@ test("Add inventory should throw an error if item does not exist", done => {
 test('Add new product should update database', done => {
   manager.addNewProdcut({ name: 'law book', department: 'law', price: 10, quantity: 2 }).then(data => {
     expect(data.affectedRows).toBe(1);
-    manager.connection().query('DELETE FROM products WHERE product_name = "law book"', () => done())
+    manager.connection().query('DELETE FROM products WHERE item_id = ?', [data.insertId], () => done())
   })
 });
 
