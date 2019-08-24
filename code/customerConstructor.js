@@ -67,10 +67,10 @@ function Customer() {
       [id, id]
     ).then(res => {
       if (res.length > 0) {
-        if (res[0].stock_quanity < quantity) {
+        if (res[0].stock_quantity < quantity) {
           throw "Insufficient quanity!";
         } else {
-          return [id, quantity, res[0].stock_quanity, res[0].price];
+          return [id, quantity, res[0].stock_quantity, res[0].price];
         }
       } else {
         throw "An item with that name or id does not exist.";
@@ -82,7 +82,7 @@ function Customer() {
     // Update db with new product quantity
     return queryToPromise(
       connection,
-      "UPDATE products set stock_quanity = ? WHERE item_id = ?;",
+      "UPDATE products set stock_quantity = ? WHERE item_id = ?;",
       [stockQuantity - quanity, id]
     ).then(res => {
       console.log("Purchase successful, thank you for your purchase.");

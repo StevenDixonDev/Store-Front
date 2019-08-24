@@ -11,9 +11,8 @@ function Manager() {
   }
   this.start = () => {
     this.ask()
-      .then(answers => {
-        return this.mapChoiceToFunction(answers.userChoice);
-      }).catch(err => {
+      .then(this.mapChoiceToFunction)
+      .catch(err => {
         console.log(err);
       })
       .finally(() => {
@@ -24,7 +23,7 @@ function Manager() {
     return inquirer.prompt([
       {
         type: 'list',
-        name: 'userChoice',
+        name: 'choice',
         choices: [
           "View Products for sale",
           "View Low Inventory",
@@ -34,7 +33,7 @@ function Manager() {
       }
     ]);
   }
-  this.mapChoiceToFunction = (choice) => {
+  this.mapChoiceToFunction = ({choice}) => {
     switch (choice) {
       case "View Products for sale": return this.showProducts();
       case "View Low Inventory": return this.showLowInvetory();
@@ -50,7 +49,7 @@ function Manager() {
       })
   };
   this.showLowInvetory = () => {
-    return queryToPromise(connection, "SELECT * from products WHERE stock_quanity < 5")
+    return queryToPromise(connection, "SELECT * from products WHERE stock_quantity < 5")
       .then((data) => {
         console.table(data);
         return data;
@@ -73,7 +72,7 @@ function Manager() {
       .then(this.addToInventory);
   }
   this.addToInventory = ({ id, quantity }) => {
-    return queryToPromise(connection, `UPDATE products SET stock_quanity = ? WHERE item_id = ?`, [quantity, id, id])
+    return queryToPromise(connection, `UPDATE products SET stock_quantity = ? WHERE item_id = ?`, [quantity, id, id])
       .then((data) => {
         if (data.affectedRows === 0) {
           throw 'Item does not exist in the database';
@@ -111,7 +110,7 @@ function Manager() {
     .then(this.addNewProduct);
   }
   this.addNewProdcut = ({name, department, price, quantity}) => {
-    return queryToPromise(connection, `INSERT INTO products (product_name, department_name, price, stock_quanity) VALUES (?,?,?,?)`, [name, department, price, quantity])
+    return queryToPromise(connection, `INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?,?,?,?)`, [name, department, price, quantity])
     .then((data) => {
       if (data.affectedRows === 0) {
         throw 'Item does not exist in the database';

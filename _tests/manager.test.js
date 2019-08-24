@@ -42,7 +42,7 @@ test("Show products should return an array of items", done => {
 
 test("Show Low inventory should should return an array of items with a quantity less than 5", done => {
   manager.showLowInvetory().then(array => {
-    expect(array.every(item => item.stock_quanity < 5)).toBe(true);
+    expect(array.every(item => item.stock_quantity < 5)).toBe(true);
     done();
   })
 });
@@ -82,3 +82,4 @@ test('Add new product should fail if a product already exists', done => {
       done();
     })
 });
+

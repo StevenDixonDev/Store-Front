@@ -4,14 +4,6 @@ beforeAll(() => {
   return customer = new Customer();
 });
 
-test('Connects To Mysql database', done => {
-  function callback(err){
-    expect(err).toBe(null);
-    done();
-  }
-  customer.connection().connect(callback);
-});
-
 test('it handles items not available in db', done =>{
   customer.handleInput({id: 'test', quantity: 1}).then((data)=>{
     expect(data).toBe(undefined);
