@@ -113,7 +113,7 @@ function Manager() {
     return queryToPromise(connection, `INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?,?,?,?)`, [name, department, price, quantity])
     .then((data) => {
       if (data.affectedRows === 0) {
-        throw 'Item does not exist in the database';
+        throw 'Item already exists in store';
       } else {
         console.log(`Item Has been updated`);
         return data;

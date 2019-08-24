@@ -27,9 +27,9 @@ describe('viewProducts should', () => {
 
 describe('createDepartment should', () => {
     test('should add a new department to the departments table', done => {
-        supervisor.createDepartment({ department: 'ree', over_head: 2000 }).then(data => {
+        supervisor.createDepartment({ department: 'test', over_head: 2000 }).then(data => {
             expect(data.affectedRows).toBe(1);
-            supervisor.connection().query('DELETE FROM products WHERE departmenet id = ?', [data.insertId], () => done())
+            supervisor.connection().query('DELETE FROM departments WHERE department_id = ?', [data.insertId], () => done())
         }).
             catch(err => {
                 expect(err).toBe(null);

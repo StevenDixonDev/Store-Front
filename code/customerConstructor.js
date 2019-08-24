@@ -29,7 +29,6 @@ function Customer() {
       })
       .catch(err => {
         console.log(err);
-        connection.end();
       });
   };
   this.ask = () => {
@@ -70,7 +69,7 @@ function Customer() {
         if (res[0].stock_quantity < quantity) {
           throw "Insufficient quanity!";
         } else {
-          return [id, quantity, res[0].stock_quantity, res[0].price];
+          return [id, quantity, res[0].stock_quantity, res[0].price, res[0].product_sales];
         }
       } else {
         throw "An item with that name or id does not exist.";
@@ -78,16 +77,16 @@ function Customer() {
     });
   };
   // function to handle the purchasing of items , removing the number from the db and informing the user
-  this.handleResult = (id, quanity, stockQuantity, price) => {
+  this.handleResult = (id, quanity, stockQuantity, price, product_sales) => {
     // Update db with new product quantity
     return queryToPromise(
       connection,
-      "UPDATE products set stock_quantity = ? WHERE item_id = ?;",
-      [stockQuantity - quanity, id]
+      "UPDATE products set stock_quantity = ?, product_sales = ? WHERE item_id = ?;",
+      [(stockQuantity - quanity), (product_sales + quanity * price), id]
     ).then(res => {
       console.log("Purchase successful, thank you for your purchase.");
       console.log(`Total spent: $${quanity * price}`);
-    });
+    })
   };
 }
 
