@@ -35,7 +35,10 @@ function Supervisor() {
         }
     }
     this.viewProducts = () => {
-        return queryToPromise(connection, "SELECT department_id, departments.department_name, over_head_costs, product_sales, (product_sales - over_head_costs) as total_profit from (Select department_name, sum(product_sales) as product_sales from products group by department_name)products join departments on products.department_name = departments.department_name;")
+        return queryToPromise(connection, 
+            `SELECT department_id, departments.department_name, over_head_costs, product_sales, (product_sales - over_head_costs) as total_profit 
+            from (Select department_name, sum(product_sales) as product_sales from products group by department_name) products 
+            join departments on products.department_name = departments.department_name;`)
             .then((data) => {
                 console.table(data);
                 return data;
