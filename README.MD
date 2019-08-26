@@ -15,17 +15,23 @@ User mode allows a user to purchase an item from the store.
 
 run `node storefrontCustomer.js` or `npm run customer`
 
+![Customer.gif](customer.gif)
+
 ### Manager Mode
 
 Manager mode allows a manager to view total stock, low stock, add products to inventory, or add a new product to the inventory.
 
 run `node storefrontManager.js` or `npm run manager`
 
+![Manager.gif](manager.gif)
+
 ### Supervisor Mode 
 
 Supervisor mode allows a supervisor to view department overheads or add new departments to the store.
 
 run `node storefrontSupervisor.js` or `npm run supervisor`
+
+![Supervisor.gif](supervisor.gif)
 
 ## What I learned
 
