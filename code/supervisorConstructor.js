@@ -1,6 +1,6 @@
-const inquirer = require("inquirer");
-const connect = require("./mySQLConnection");
-const queryToPromise = require("./queryPromisify");
+const inquirer = require('inquirer');
+const connect = require('./mySQLConnection');
+const queryToPromise = require('./queryPromisify');
 const cTable = require('console.table');
 
 const connection = connect();
@@ -24,14 +24,14 @@ function Supervisor() {
             {
                 type: 'list',
                 name: 'choice',
-                choices: ["View Product Sales by Department", "Create New Department"]
+                choices: ['View Product Sales by Department', 'Create New Department']
             }
         ]);
     }
     this.mapChoiceToFunctions = ({ choice }) => {
         switch (choice) {
-            case "View Product Sales by Department": return this.viewProducts();
-            case "Create New Department": return this.createDepartmentAsk();
+            case 'View Product Sales by Department': return this.viewProducts();
+            case 'Create New Department': return this.createDepartmentAsk();
         }
     }
     this.viewProducts = () => {
@@ -60,13 +60,12 @@ function Supervisor() {
             .then(this.createDepartment);
     }
     this.createDepartment = ({ department, over_head }) => {
-        return queryToPromise(connection, `INSERT INTO departments (department_name, over_head_costs) VALUES (?,?)`, [department, over_head])
+        return queryToPromise(connection, 'INSERT INTO departments (department_name, over_head_costs) VALUES (?,?)', [department, over_head])
             .then((data) => {
-                console.log(data)
                 if (data.affectedRows === 0) {
                     throw 'Department already exists';
                 } else {
-                    console.log(`Department has been added.`);
+                    console.log('Department has been added.');
                     return data;
                 }
             })

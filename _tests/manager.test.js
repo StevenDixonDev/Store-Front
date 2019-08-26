@@ -27,8 +27,8 @@ describe("Manager object", () => {
     expect(typeof manager.addToInventory).toBe('function');
   })
   // should have a function that adds a new item
-  test('Should have a function named addNewProdcut', () => {
-    expect(typeof manager.addNewProdcut).toBe('function');
+  test('Should have a function named addNewProduct', () => {
+    expect(typeof manager.addNewProduct).toBe('function');
   })
 });
 

@@ -1,6 +1,6 @@
-const inquirer = require("inquirer");
-const connect = require("./mySQLConnection");
-const queryToPromise = require("./queryPromisify");
+const inquirer = require('inquirer');
+const connect = require('./mySQLConnection');
+const queryToPromise = require('./queryPromisify');
 const cTable = require('console.table');
 
 const connection = connect();
@@ -35,25 +35,25 @@ function Customer() {
     // use inquirer to ask customer for id and quantity.
     return inquirer.prompt([
       {
-        name: "id",
-        message: "Please provide an ID for the item you wish to purchase."
+        name: 'id',
+        message: 'Please provide an ID for the item you wish to purchase.'
       },
       {
-        name: "quantity",
-        message: "Please provide the quantity of how many you wish to purchase."
+        name: 'quantity',
+        message: 'Please provide the quantity of how many you wish to purchase.'
       }
     ]);
   };
   // display database data in console
   this.show = dataToShow => {
-    if (typeof dataToShow !== "string") {
+    if (typeof dataToShow !== 'string') {
       console.table(dataToShow);
     }
     // return data so that we can use it in the next then function
     return dataToShow;
   };
   this.queryDataBase = () => {
-    return queryToPromise(connection, "SELECT * FROM products;")
+    return queryToPromise(connection, 'SELECT * FROM products;')
     .then(data => {
       return this.show(data);
     });
@@ -62,17 +62,17 @@ function Customer() {
   this.handleInput = ({ id, quantity }) => {
     return queryToPromise(
       connection,
-      "SELECT * FROM products WHERE item_id = ? OR product_name = ?;",
+      'SELECT * FROM products WHERE item_id = ? OR product_name = ?;',
       [id, id]
     ).then(res => {
       if (res.length > 0) {
         if (res[0].stock_quantity < quantity) {
-          throw "Insufficient quanity!";
+          throw 'Insufficient quanity!';
         } else {
           return [id, quantity, res[0].stock_quantity, res[0].price, res[0].product_sales];
         }
       } else {
-        throw "An item with that name or id does not exist.";
+        throw 'An item with that name or id does not exist.';
       }
     });
   };
@@ -81,10 +81,10 @@ function Customer() {
     // Update db with new product quantity
     return queryToPromise(
       connection,
-      "UPDATE products set stock_quantity = ?, product_sales = ? WHERE item_id = ?;",
+      'UPDATE products set stock_quantity = ?, product_sales = ? WHERE item_id = ?;',
       [(stockQuantity - quanity), (product_sales + quanity * price), id]
     ).then(res => {
-      console.log("Purchase successful, thank you for your purchase.");
+      console.log('Purchase successful, thank you for your purchase.');
       console.log(`Total spent: $${quanity * price}`);
     })
   };
